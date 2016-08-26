@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'yaoguang-python-client',
-    version = '0.0.1',
+    version = '0.0.3',
     author = 'onesuper',
     author_email = 'onesuperclark@gmail.com',
     url = 'https://github.com/baixing/yaoguang',
@@ -11,7 +11,7 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     license = 'MIT',
-    install_requires = ['thrift'],
+    install_requires = ['thrift', 'pygments'],
     platforms = 'any',
     zip_safe = False,
 )
