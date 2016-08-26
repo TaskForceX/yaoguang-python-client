@@ -1,15 +1,12 @@
 ## yaoguang-python-client
 
-
-```
-pip3 install yaoguang-python-client
-```
-
-
 ```Python
+
+$ pip3 install yaoguang-python-client
+$ python3
 >>> from yaoguang.lead import Leads
->>> lead = Leads('bj2-storm03')
->>> yg.lead('******7896')
+>>> leads = Leads('bj2-storm03')
+>>> leads.get('******7896')
 {
     "bj_user_recycle_order_accrual_90": 10.0,
     "contact_id": "******7896",
