@@ -1,1 +1,1 @@
-include yaoguang.thrift
+graft yaoguang/static

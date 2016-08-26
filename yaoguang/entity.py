@@ -3,6 +3,8 @@
 from thriftpy.rpc import make_client
 from thriftpy import load
 
+from pkg_resources import resource_filename
+
 import json
 
 CONTACT=1
@@ -12,7 +14,7 @@ AD=3
 class Entities(object):
 
     def __init__(self, address, port=9196):
-        thrift = load("yaoguang.thrift", module_name="yaoguang_thrift")
+        thrift = load(resource_filename(__name__, "static/yaoguang.thrift"), module_name="yaoguang_thrift")
         self._client = make_client(thrift.ThriftInterface, address, port)
 
     def bj_tags_ready(self):
