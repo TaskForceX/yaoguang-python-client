@@ -11,7 +11,7 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     license = 'MIT',
-    install_requires = ['thrift', 'pygments'],
+    install_requires = ['thriftpy', 'pygments'],
     platforms = 'any',
     zip_safe = False,
 )
