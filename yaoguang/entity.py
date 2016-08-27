@@ -4,6 +4,7 @@ from thriftpy.rpc import make_client
 from thriftpy import load
 
 from pkg_resources import resource_filename
+from pygments import highlight, lexers, formatters
 
 import json
 
@@ -40,3 +41,27 @@ class Entities(object):
     def get_contacts(self, ids, fields=[]):
         asJson = self._client.get(CONTACT, fields , ids)
         return json.loads(asJson)
+
+
+class Entity(object):
+
+    def __init__(self, dic):
+        for k, v in dic.items():
+            setattr(self, k, v)
+        self._dic = dic
+
+    def __repr__(self):
+        return Entity._pretty_json(self._dic)
+
+    def __str__(self):
+        return self.as_json()
+
+    def as_json(self):
+        return json.dumps(self._dic)
+
+    @classmethod
+    def _pretty_json(cls, dic, color=True):
+        formatted_json = json.dumps(dic, sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
+        if color:
+            return highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+        return formatted_json

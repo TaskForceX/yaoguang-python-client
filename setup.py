@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'yaoguang-python-client',
-    version = '0.0.4',
+    version = '0.0.6',
     author = 'onesuper',
     author_email = 'onesuperclark@gmail.com',
     url = 'https://github.com/baixing/yaoguang',
@@ -14,4 +14,6 @@ setup(
     install_requires = ['thriftpy', 'pygments'],
     platforms = 'any',
     zip_safe = False,
+    test_suite = 'nose.collector',
+    tests_require=['nose'],
 )

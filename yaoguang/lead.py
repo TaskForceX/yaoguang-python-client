@@ -1,25 +1,11 @@
 
+from yaoguang.entity import Entities, Entity
 
-from yaoguang.entity import Entities
-
-from pygments import highlight, lexers, formatters
 import json
 
-class Lead(object):
-    def __init__(self, dic):
-        self._dic = dic
 
-    def __repr__(self):
-        return self._pretty()
-
-    def __str__(self):
-        return self._pretty(color=False)
-        
-    def _pretty(self, color=True):
-        formatted_json = json.dumps(self._dic, sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
-        if color:
-            return highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-        return formatted_json
+class Lead(Entity):
+    pass
 
 
 class Leads(Entities):
@@ -30,9 +16,9 @@ class Leads(Entities):
         if lead is None:
             raise Exception('no such lead %s:' % phone_number)
     
-        return self._complete_lead(lead)
+        return self._make_lead(lead)
 
-    def _complete_lead(self, lead):
+    def _make_lead(self, lead):
         if 'company_id' in lead:
             id = lead['company_id']
             company = self.get_company(id)
@@ -40,8 +26,11 @@ class Leads(Entities):
             if 'latest_ads' in company:
                 ids = list(company['latest_ads'].keys())
                 ads = self.get_ads(ids)
-                for key, value in ads.items():
-                    company[key] = value
+                latest_ads = {}
+                for ad_id, ad in ads.items():
+                    latest_ads[ad_id] = ad
+                company['latest_ads'] = latest_ads
+
             lead['company'] = company
 
         if 'last_ad_id' in lead:
