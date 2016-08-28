@@ -1,12 +1,13 @@
 ## yaoguang-python-client
 
 ```Python
-
 $ pip3 install yaoguang-python-client
 $ python3
 >>> from yaoguang.lead import Leads
 >>> leads = Leads('bj2-storm03')
->>> leads.get('******7896')
+>>> lead = leads.get('******7896')
+>>> printf(lead.ls())  # inspect fields
+>>> lead  # repr as pretty json
 {
     "bj_user_recycle_order_accrual_90": 10.0,
     "contact_id": "******7896",
@@ -20,5 +21,6 @@ $ python3
     "tm_user_last_recharge_time": 1464969600,
     "tm_user_recharge_amount_sum_360": 10.0
 }
+>>> lead['company']['latest_ads']['ad_id_xxx'] # chain access
 ```
 

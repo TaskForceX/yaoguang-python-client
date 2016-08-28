@@ -1,4 +1,5 @@
 
+from .exc import NoSuchEntity
 
 from thriftpy.rpc import make_client
 from thriftpy import load
@@ -22,42 +23,55 @@ class Entities(object):
         result = self._client.isReady("hello")
         json.loads(result)
 
+    """
+    由于批量接口在 entity 不存在的时候不会抛出异常，所以在客户端做检查
+    """
     def get_company(self, id, fields=[]):
         asJson = self._client.get(COMPANY, fields, [id])
-        return json.loads(asJson).get(id)
+        company = json.loads(asJson).get(id)
+
+        if company is None:
+           raise NoSuchEntity(id)
+        return company
 
     def get_ad(self, id, fields=[]):
         asJson = self._client.get(AD, fields, [id])
-        return json.loads(asJson).get(id)
-    
-    def get_ads(self, ids, fields=[]):
-        asJson = self._client.get(AD, fields, ids)
-        return json.loads(asJson)
+        ad = json.loads(asJson).get(id)
+
+        if ad is None:
+           raise NoSuchEntity(id)
+        return ad
 
     def get_contact(self, id, fields=[]):
         asJson = self._client.get(CONTACT, fields , [id])
-        return json.loads(asJson).get(id)
+        contact = json.loads(asJson).get(id)
+    
+        if contact is None:
+            raise NoSuchEntity(id)
+        return contact
+
+    def get_ads(self, ids, fields=[]):
+        asJson = self._client.get(AD, fields, ids)
+        return json.loads(asJson)
 
     def get_contacts(self, ids, fields=[]):
         asJson = self._client.get(CONTACT, fields , ids)
         return json.loads(asJson)
 
 
-class Entity(object):
-
+class Entity(dict):
     def __init__(self, dic):
-        for k, v in dic.items():
-            setattr(self, k, v)
-        self._dic = dic
+        dict.__init__(self)
+        self.update(dic)
 
     def __repr__(self):
-        return Entity._pretty_json(self._dic)
+        return Entity._pretty_json(self)
 
     def __str__(self):
-        return self.as_json()
+        return json.dumps(self)
 
-    def as_json(self):
-        return json.dumps(self._dic)
+    def ls(self):
+        return '\n'.join(self.keys())
 
     @classmethod
     def _pretty_json(cls, dic, color=True):

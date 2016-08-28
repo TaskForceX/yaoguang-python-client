@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'yaoguang-python-client',
-    version = '0.0.6',
+    version = '0.0.7',
     author = 'onesuper',
     author_email = 'onesuperclark@gmail.com',
     url = 'https://github.com/baixing/yaoguang',
