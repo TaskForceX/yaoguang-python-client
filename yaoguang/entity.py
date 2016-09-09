@@ -1,4 +1,5 @@
 
+
 from .exc import NoSuchEntity
 
 from thriftpy.rpc import make_client
@@ -20,8 +21,8 @@ class Entities(object):
         self._client = make_client(thrift.ThriftInterface, address, port)
 
     def bj_tags_ready(self):
-        result = self._client.isReady("hello")
-        json.loads(result)
+        return self._client.isReady("hello")
+
 
     """
     由于批量接口在 entity 不存在的时候不会抛出异常，所以在客户端做检查
