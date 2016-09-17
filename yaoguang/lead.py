@@ -28,3 +28,7 @@ class Leads(Entities):
             lead['last_ad'] = Entity(ad)
 
         return Entity(lead)
+
+    def get_v2(self, phone_number):
+        lead = self.get_contact_by_id(phone_number)
+        return Entity(lead)

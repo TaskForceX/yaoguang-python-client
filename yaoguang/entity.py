@@ -51,6 +51,15 @@ class Entities(object):
             raise NoSuchEntity(id)
         return contact
 
+
+    def get_contact_by_id(self, id):
+        asJson = self._client.getByContactId(id)
+        contact = json.loads(asJson)
+        if contact is None:
+            raise NoSuchEntity(id)
+        return contact
+
+
     def get_ads(self, ids, fields=[]):
         asJson = self._client.get(AD, fields, ids)
         return json.loads(asJson)
